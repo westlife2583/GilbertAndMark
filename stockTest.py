@@ -11,8 +11,16 @@ stocklist2 = []
 stocklist3 = []
 stocklist4 = []
 
+#國巨2327#華新科2492#奇力新2456#環球晶6488#創意3443#新普6121#聚陽1477#統一超2912#美律2439#玉晶光3406#貿聯KY3665#台達電2308#鼎翰3611
+focusStock = ['2327', '2492', '2456', '6488', '3443', '6121', '1477', '2912', '2439', '3406', '3665', '2308', '3611']
+
 def stockQuery(code):
-    print(twstock.realtime.get(code))
+    with open('output.txt', 'a') as file:
+        result = twstock.realtime.get(code)
+        result = str(result)
+        print(result)
+        result += '\n'
+        file.write(result)
 
 def stockQueryMultiProcess(stocklist, num):
     threads = []
@@ -71,16 +79,18 @@ if __name__ == '__main__':
 """
 
 # Multi-Thread
-"""
+es = elasticsearch.Elasticsearch([{'host': '127.0.0.1', 'port': 9200}])
+es.index('test')
+
+
 while 1:
     #print(twstock.codes.keys())
     threads = []
     i = 0
     print(datetime.datetime.now())
-    for stock in allStock:
+    for stock in focusStock:
         threads.append(threading.Thread(target = stockQuery, args = (stock,)))
         threads[len(threads)-1].start()
-        print(i)
         i += 1
 
     for query in threads:
@@ -88,8 +98,8 @@ while 1:
 
     print(datetime.datetime.now())
     time.sleep(5)
-"""
 
+"""
 while(1):
     now = time.localtime(time.time())
     #if now.tm_hour >= 9:
@@ -101,7 +111,7 @@ while(1):
     stock = twstock.realtime.get(['1258', '1259'])
     print(stock)
     time.sleep(5)
-
+"""
 
 """
 while(1):x
