@@ -3,6 +3,7 @@ import multiprocessing
 import threading
 import time
 import datetime
+import codecs
 import elasticsearch
 
 allStock = []
@@ -15,7 +16,7 @@ stocklist4 = []
 focusStock = ['2327', '2492', '2456', '6488', '3443', '6121', '1477', '2912', '2439', '3406', '3665', '2308', '3611']
 
 def stockQuery(code):
-    with open('output.txt', 'a') as file:
+    with codecs.open('output.txt', 'a', 'utf8') as file:
         result = twstock.realtime.get(code)
         result = str(result)
         print(result)
@@ -79,8 +80,8 @@ if __name__ == '__main__':
 """
 
 # Multi-Thread
-es = elasticsearch.Elasticsearch([{'host': '127.0.0.1', 'port': 9200}])
-es.index('test')
+#es = elasticsearch.Elasticsearch([{'host': '127.0.0.1', 'port': 9200}])
+#es.index('test')
 
 
 while 1:
